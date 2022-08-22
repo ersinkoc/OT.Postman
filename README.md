@@ -2,6 +2,8 @@
 
 Veritabanına kaydedilen mailler için SMTP üzerinden mail gönderme console zımbırtısı
 
+.NET 6 (Core) ile MailKit kullanılarak hazırlandı. Derlendiğinde her ortamda (win,lin,mac) çalışır.
+
 JSON kaynağı adresiniz https://your.source.url/mails/ gibi olmalı.
 
 Yazılım ***[SOURCEURL]?fetch=ok&secret=[SECRET]*** adresinden örnekteki gibi bir JSON alır. Json içeriğinde SMTP bilgileri (şifre hariç), toplam mail sayısı, json içindeki maillerin sayısı (tavsiye 10 mail'i geçmesin), sonraki sorgu için beklenecek süre (saniye olarak) ve maillerin id, alıcı adı, mail adresi, başlık ve içerik detayı bulunur.
