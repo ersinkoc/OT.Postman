@@ -1,22 +1,31 @@
 # OT.Postman
 
-You need the source URL to receive pending emails.
+Veritabanına kaydedilen mailler için SMTP üzerinden mail gönderme console zımbırtısı
 
-Example: https://your.source.url/mails/
+JSON kaynağı adresiniz https://your.source.url/mails/ gibi olmalı.
 
-***PREPARE JSON ON***
+Yazılım ***[SOURCEURL]?fetch=ok&secret=[SECRET]*** adresinden örnekteki gibi bir JSON alır. Json içeriğinde SMTP bilgileri (şifre hariç), toplam mail sayısı, json içindeki maillerin sayısı (tavsiye 10 mail'i geçmesin), sonraki sorgu için beklenecek süre (saniye olarak) ve maillerin id, alıcı adı, mail adresi, başlık ve içerik detayı bulunur.
 
-?fetch=ok&secret=[SECRET] 
+JSON içeriği için örnek SQL sorgusu
 
-***SUCCESS ENDPOINT***
+```sql
+SELECT id as Id, name as ToName ,email as ToMail, title as Subject ,content as Content FROM send_emails WHERE is_send = 0 AND trying < 6 AND next_try_date <= now() ORDER by next_try_date ASC LIMIT 10
+```
 
-?ok=1&id=[Id]&secret=[SECRET]
+Eğer SMTP sorunsuz bir şekilde mail gönderirse bunu ***[SOURCEURL]?ok=1&id=[Id]&secret=[SECRET]*** adresine raporlar. Mailleri gönderildi olarak işaretleyebilirsiniz.
 
-***ERROR ENDPOINT***
+```sql
+UPDATE send_emails SET is_send = 1, send_date = now() WHERE id = '[ID]'
+```
 
-?error=1&id=[Id]&secret=[SECRET]&error_message=houston!wehaveaproblem...
+Eğer bir hata oluşursa ***[SOURCEURL]?error=1&id=[Id]&secret=[SECRET]&error_message=houston!wehaveaproblem...*** adresine rapor gönderilir. Hatalı mailler için ise şu şekilde bir SQL kullanılabilir. 
 
-JSON Example:
+
+```sql
+UPDATE send_emails SET send_date = '0000-00-00 00:00:00', is_send = 0, error = '[error_message]', trying = trying + 1, next_try_date = DATE_ADD(NOW() , INTERVAL 5 MINUTE) WHERE is_send = 0 AND id = '[ID]'"
+```
+
+JSON Örneği:
 
 ```json
 
