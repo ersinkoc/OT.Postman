@@ -17,8 +17,11 @@ namespace OT.Postman
         public int SmtpPort { get; set; }
         public string TargetUrl { get; set; }
         public string Secret { get; set; }
+        public string ReturnKey { get; set; }
 
-        public Constants(string FromName, string SenderMail, string EmailPassword, string SmtpHost, int SmtpPort, string TargetUrl, string Secret)
+        
+
+        public Constants(string FromName, string SenderMail, string EmailPassword, string SmtpHost, int SmtpPort, string TargetUrl, string Secret, string ReturnKey)
         {
             this.FromName = FromName;
             this.FromMail = SenderMail;
@@ -27,6 +30,7 @@ namespace OT.Postman
             this.SmtpPort = SmtpPort;
             this.TargetUrl = TargetUrl;
             this.Secret = Secret;
+            this.ReturnKey = ReturnKey;
         }
 
         public Constants()
@@ -38,6 +42,7 @@ namespace OT.Postman
             this.SmtpPort = 0;
             this.TargetUrl = "";
             this.Secret = "";
+            this.ReturnKey = "";
         }
 
     }

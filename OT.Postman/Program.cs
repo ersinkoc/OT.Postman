@@ -78,6 +78,8 @@ while (InfinityLoop)
                     if (!string.IsNullOrEmpty(root.FromName)) provider.FromName = root.FromName;
                     if (!string.IsNullOrEmpty(root.SmtpHost)) provider.SmtpHost = root.SmtpHost;
                     if (!string.IsNullOrEmpty(root.SmtpPort)) provider.SmtpPort = Int32.Parse(root.SmtpPort);
+                    if (!string.IsNullOrEmpty(root.ReturnKey)) provider.ReturnKey = root.ReturnKey;
+                    
 
                     Console.Clear();
                     Helper.Header(provider);

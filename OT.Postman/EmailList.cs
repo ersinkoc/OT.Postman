@@ -9,5 +9,6 @@ public class EmailList
     public string? SmtpPort { get; set; }
     public string? FromName { get; set; }
     public string? FromMail { get; set; }
+    public string? ReturnKey { get; set; }
     public List<EmailContent>? data { get; set; }
 }
