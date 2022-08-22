@@ -1,5 +1,8 @@
 # OT.Postman
 
+![Örnek Ekran](https://github.com/ersinkoc/OT.Postman/blob/master/ot.postman.jpg?raw=true)
+
+
 Veritabanına kaydedilen mailler için SMTP üzerinden mail gönderme console zımbırtısı
 
 .NET 6 (Core) ile MailKit kullanılarak hazırlandı. Derlendiğinde her ortamda (win,lin,mac) çalışır.
