@@ -22,7 +22,7 @@ Eğer bir hata oluşursa ***[SOURCEURL]?error=1&id=[Id]&secret=[SECRET]&error_me
 
 
 ```sql
-UPDATE send_emails SET send_date = '0000-00-00 00:00:00', is_send = 0, error = '[error_message]', trying = trying + 1, next_try_date = DATE_ADD(NOW() , INTERVAL 5 MINUTE) WHERE is_send = 0 AND id = '[ID]'"
+UPDATE send_emails SET send_date = '0000-00-00 00:00:00', is_send = 0, error = '[error_message]', trying = trying + 1, next_try_date = DATE_ADD(NOW() , INTERVAL 5 MINUTE) WHERE is_send = 0 AND id = '[ID]'
 ```
 
 JSON Örneği:
@@ -62,9 +62,9 @@ Sample MySQL Table for E-Mails
 ```sql
 CREATE TABLE `send_emails` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `is_send` tinyint(1) NOT NULL DEFAULT '0',
   `record_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
