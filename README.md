@@ -47,3 +47,24 @@ JSON Example:
 
 ```
 
+
+Sample MySQL Table for E-Mails
+
+```sql
+CREATE TABLE `send_emails` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `is_send` tinyint(1) NOT NULL DEFAULT '0',
+  `record_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `send_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `trying` tinyint(1) NOT NULL DEFAULT '0',
+  `next_try_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `error` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+```
+
