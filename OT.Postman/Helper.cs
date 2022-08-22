@@ -12,7 +12,7 @@ namespace OT.Postman
         public static void SendReport(Constants provider, int id, bool Ok, string ErrorMessage)
         {
             var url = provider.TargetUrl;
-            if (Ok) { url = url + "?ok=1&secret=" + provider.Secret + "id=" + id; } else { url = url + "?error=1&secret=" + provider.Secret + "id=" + id + "&error_message=" + ErrorMessage; }
+            if (Ok) { url = url + "?ok=1&secret=" + provider.Secret + "&id=" + id; } else { url = url + "?error=1&secret=" + provider.Secret + "&id=" + id + "&error_message=" + ErrorMessage; }
             var options = new RestClientOptions(url)
             {
                 ThrowOnAnyError = true,
@@ -40,7 +40,7 @@ namespace OT.Postman
 
             for (int t = 0; t < WaitForNextFetch; t++)
             {
-                Thread.Sleep(500); 
+                Thread.Sleep(500);
                 Console.Write("■");
                 Thread.Sleep(500);
             }

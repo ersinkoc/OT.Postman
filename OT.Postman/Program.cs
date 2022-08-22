@@ -25,11 +25,11 @@ while (!TargetUrl)
     if (!string.IsNullOrEmpty(newUrl) && newUrl.Length > 10)
     {
         if (!newUrl.EndsWith("/")) newUrl = newUrl + "/";
+        
         provider.TargetUrl = newUrl;
         TargetUrl = true;
     }
 }
-
 
 Console.WriteLine("SMTP Password:");
 string newSmtpPassword = Helper.ReadPassword();
