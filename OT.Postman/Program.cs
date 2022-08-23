@@ -20,21 +20,22 @@ bool TargetUrl = false;
 
 while (!TargetUrl)
 {
-    Console.WriteLine("Source URL:");
+    Console.Write("Source URL : ");
     var newUrl = Console.ReadLine();
-    if (!string.IsNullOrEmpty(newUrl) && newUrl.Length > 10)
+    if (!string.IsNullOrEmpty(newUrl) && newUrl.Length > 10 && (newUrl.StartsWith("http://") || newUrl.StartsWith("https://")))
     {
-        if (!newUrl.EndsWith("/")) newUrl = newUrl + "/";
-        
-        provider.TargetUrl = newUrl;
+        if (!newUrl.EndsWith("/")) newUrl += "/";
+
+        provider.SourceUrl = newUrl;
         TargetUrl = true;
     }
+
 }
 
-Console.WriteLine("SMTP Password:");
+Console.Write("\nSMTP Password : ");
 string newSmtpPassword = Helper.ReadPassword();
 
-Console.WriteLine("Secret Key: (if needed)");
+Console.Write("\nSecret Key (if needed) : ");
 string secretKey = Helper.ReadPassword();
 
 if (!string.IsNullOrEmpty(newSmtpPassword) && newSmtpPassword.Length > 3) provider.EmailPassword = newSmtpPassword.ToString();
@@ -52,7 +53,7 @@ while (InfinityLoop)
             FirstFetch = true;
         }
 
-        RestClientOptions options = new RestClientOptions(provider.TargetUrl + "?fetch=ok&secret=" + provider.Secret)
+        RestClientOptions options = new RestClientOptions(provider.SourceUrl + "?fetch=ok&secret=" + provider.Secret)
         {
             ThrowOnAnyError = true,
             MaxTimeout = 5000
@@ -79,7 +80,7 @@ while (InfinityLoop)
                     if (!string.IsNullOrEmpty(root.SmtpHost)) provider.SmtpHost = root.SmtpHost;
                     if (!string.IsNullOrEmpty(root.SmtpPort)) provider.SmtpPort = Int32.Parse(root.SmtpPort);
                     if (!string.IsNullOrEmpty(root.ReturnKey)) provider.ReturnKey = root.ReturnKey;
-                    
+
 
                     Console.Clear();
                     Helper.Header(provider);

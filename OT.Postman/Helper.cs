@@ -11,7 +11,7 @@ namespace OT.Postman
     {
         public static void SendReport(Constants provider, int id, bool Ok, string ErrorMessage)
         {
-            var url = provider.TargetUrl;
+            var url = provider.SourceUrl;
             if (Ok)
             {
                 url = url + "?ok=1&secret=" + provider.Secret + "&ReturnKey=" + provider.ReturnKey + "&id=" + id;
@@ -62,9 +62,9 @@ namespace OT.Postman
         {
             Console.WriteLine("OT.Postman V1.0");
             Console.WriteLine();
-            if (provider.TargetUrl != "") Console.WriteLine("Target URL (" + provider.TargetUrl + ")");
+            if (provider.SourceUrl != "") Console.WriteLine("Source URL (" + provider.SourceUrl + ")");
             if (provider.SmtpHost != "") Console.WriteLine("SMTP: " + provider.SmtpHost);
-            if (provider.SmtpPort > 0) Console.WriteLine("SMTP: " + provider.SmtpPort);
+            if (provider.SmtpPort > 0) Console.WriteLine("Port: " + provider.SmtpPort);
             if (provider.FromMail != "") Console.WriteLine("From: \"" + provider.FromName + "\" <" + provider.FromMail + ">");
             Console.WriteLine("\n");
         }
