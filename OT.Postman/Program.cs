@@ -6,6 +6,8 @@ using OT.Postman;
 using RestSharp;
 using System;
 
+
+
 IEmailSender iEmailSender = new EmailService();
 
 bool InfinityLoop = true;
@@ -14,9 +16,31 @@ int WaitForNextFetch = 10;
 int WaitForNextMail = 500;
 
 Constants provider = new Constants();
+
+string path = Directory.GetCurrentDirectory();
+
+using (StreamReader file = File.OpenText(path: path + "\\data.json"))
+{
+    JsonSerializer serializer = new JsonSerializer();
+    var ps = (PostmanSettings)serializer.Deserialize(file, typeof(PostmanSettings));
+    //Console.WriteLine(ps.SourceUrl);
+    //Console.WriteLine(ps.SmtpPassword);
+    //Console.WriteLine(ps.SecretKey);
+    if (!string.IsNullOrEmpty(ps.SourceUrl)) provider.SourceUrl = ps.SourceUrl;
+    if (!string.IsNullOrEmpty(ps.SmtpPassword)) provider.EmailPassword = ps.SmtpPassword;
+    if (!string.IsNullOrEmpty(ps.SecretKey)) provider.Secret = ps.SecretKey;
+}
+
+
+
 Helper.Header(provider);
 
-bool TargetUrl = false;
+bool TargetUrl = true;
+
+if (string.IsNullOrEmpty(provider.SourceUrl))
+    TargetUrl = false;
+else
+    Console.WriteLine("Source Url: √");
 
 while (!TargetUrl)
 {
@@ -29,17 +53,32 @@ while (!TargetUrl)
         provider.SourceUrl = newUrl;
         TargetUrl = true;
     }
+}
+
+if (string.IsNullOrEmpty(provider.EmailPassword))
+{
+    Console.Write("\nSMTP Password : ");
+    string newSmtpPassword = Helper.ReadPassword();
+    if (!string.IsNullOrEmpty(newSmtpPassword) && newSmtpPassword.Length > 3) provider.EmailPassword = newSmtpPassword.ToString();
+}
+else
+{
+    Console.WriteLine("SMTP Password : √");
+}
+
+if (string.IsNullOrEmpty(provider.Secret))
+{
+    Console.Write("\nSecret Key (if needed) : ");
+    string secretKey = Helper.ReadPassword();
+    if (!string.IsNullOrEmpty(secretKey) && secretKey.Length > 1) provider.Secret = secretKey.ToString();
+}
+else
+{
+    Console.WriteLine("Secret Key : √");
 
 }
 
-Console.Write("\nSMTP Password : ");
-string newSmtpPassword = Helper.ReadPassword();
 
-Console.Write("\nSecret Key (if needed) : ");
-string secretKey = Helper.ReadPassword();
-
-if (!string.IsNullOrEmpty(newSmtpPassword) && newSmtpPassword.Length > 3) provider.EmailPassword = newSmtpPassword.ToString();
-if (!string.IsNullOrEmpty(secretKey) && secretKey.Length > 1) provider.Secret = secretKey.ToString();
 
 while (InfinityLoop)
 {
